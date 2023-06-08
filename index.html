@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag and Drop</title>
+    <style>
+      body {
+        background-color: #131324;
+      }
+      h1 {
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .big-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .container {
+        font-family: "Josefin Sans", sans-serif;
+        width: 80rem;
+        height: 20rem;
+        border: 0.1rem solid #997af0;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .item {
+        text-transform: uppercase;
+        background-color: #7c58de;
+        color: white;
+        border: 1px solid #999;
+        padding: 1rem;
+        margin-bottom: 5px;
+        cursor: move;
+      }
+      button {
+        position: absolute;
+        align-content: center;
+        background-color: #4e0eff;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 0.4rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        &:hover {
+          background-color: #4e0eff;
+        }
+      }
+      .button-centre {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Drag and Drop According sizes...!</h1>
+    <div id="big-container" class="big-container">
+      <div id="container1" class="container">
+        <div class="item" draggable="true">Earth</div>
+        <div class="item" draggable="true">Galaxy</div>
+        <div class="item" draggable="true">Country</div>
+        <div class="item" draggable="true">Mumbai</div>
+        <div class="item" draggable="true">Person</div>
+      </div>
+
+      <div id="container2" class="container"></div>
+    </div>
+    <div class="button-center">
+      <button id="resetButton">Reset</button>
+    </div>
+
+    <script>
+      const containers = document.querySelectorAll(".container");
+      let draggedItem = null;
+
+      const resetButton = document.getElementById("resetButton");
+      resetButton.addEventListener("click", () => {
+        // Reset containers
+        document.location.reload(true);
+        // Reset dragged item
+
+        if (draggedItem) {
+          draggedItem.style.display = "block";
+          draggedItem = null;
+        }
+      });
+
+      containers.forEach((container) => {
+        container.addEventListener("dragover", (e) => {
+          e.preventDefault();
+        });
+
+        container.addEventListener("dragenter", (e) => {
+          e.preventDefault();
+          container.style.border = "2px dashed #999";
+        });
+
+        container.addEventListener("dragleave", () => {
+          container.style.border = "1px solid #ccc";
+        });
+
+        container.addEventListener("drop", () => {
+          container.appendChild(draggedItem);
+          container.style.border = "1px solid #ccc";
+        });
+      });
+
+      const items = document.querySelectorAll(".item");
+      items.forEach((item) => {
+        item.addEventListener("dragstart", () => {
+          draggedItem = item;
+          setTimeout(() => {
+            item.style.display = "none";
+          }, 0);
+        });
+
+        item.addEventListener("dragend", () => {
+          setTimeout(() => {
+            draggedItem.style.display = "block";
+            draggedItem = null;
+          }, 0);
+        });
+      });
+    </script>
+  </body>
+</html>
