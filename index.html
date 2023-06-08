@@ -79,14 +79,7 @@
 
       const resetButton = document.getElementById("resetButton");
       resetButton.addEventListener("click", () => {
-        // Reset containers
         document.location.reload(true);
-        // Reset dragged item
-
-        if (draggedItem) {
-          draggedItem.style.display = "block";
-          draggedItem = null;
-        }
       });
 
       containers.forEach((container) => {
